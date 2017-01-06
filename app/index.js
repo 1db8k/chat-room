@@ -1,3 +1,4 @@
 module.exports = {
-  router: require('./routes')
+  router: require('./routes'),
+  session: require('./session')
 }
