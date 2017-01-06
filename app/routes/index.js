@@ -1,42 +1,35 @@
 const router = require('express').Router()
 
-module.exports = function routes () {
-  function loginHandler (req, res, next) {
-    res.render('login', { cssPath: 'loginStyles', title: 'Login' })
-  }
-  let routes = {
-    'get': {
-      '/': loginHandler,
-      '/login': loginHandler,
-      '/rooms': (req, res, next) => {
-        res.render('rooms', { cssPath: 'roomsStyles', title: 'Rooms' })
-      },
-      '/chatroom': (req, res, next) => {
-        res.render('chatroom', {
-          cssPath: 'chatroomStyles',
-          title: 'Chatroom'
-        })
-      },
-      '*': (req, res, next) => {
-        res.render('404', {
-          cssPath: 'roomsStyles',
-          title: 'Error 404'
-        })
-      }
-    },
-    'post': {
-    }
-  }
+router.get(['/', '/login'], (req, res, next) => {
+  res.render('login', {
+    cssPath: 'loginStyles',
+    title: 'Login'
+  })
+})
 
-  function registerRoutes (routes, method) {
-    for (var key in routes) {
-      let value = routes[key]
-      if (routes.hasOwnProperty(key) &&
-      typeof value === 'object' &&
-      value !== null &&
-      value.constructor !== Array) {
-        router.method(key, value)
-      }
-    }
-  }
-}
+router.get('/rooms', (req, res, next) => {
+  res.render('rooms', {
+    cssPath: 'roomsStyles',
+    title: 'Rooms'
+  })
+})
+
+router.get('/chatroom', (req, res, next) => {
+  res.render('chatroom', {
+    cssPath: 'chatroomStyles',
+    title: 'Chatroom'
+  })
+})
+
+router.get('/dashboard', (req, res, next) => {
+  res.send('<html><head><link rel="icon" type="image/png" href="/public/favicon.ico"></head><h1>This is the Dashboard</h1></html>')
+})
+
+router.get('*', (req, res, next) => {
+  res.render('404', {
+    cssPath: '404',
+    title: 'Error 404'
+  })
+})
+
+module.exports = router
