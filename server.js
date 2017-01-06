@@ -11,6 +11,7 @@ app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', '.hbs')
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use(chatroom.session)
 app.use(chatroom.router)
 
 // app.get('/public/favicon', (req, res) => {
