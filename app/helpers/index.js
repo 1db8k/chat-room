@@ -6,19 +6,18 @@ function findUser (profileId) {
 }
 
 // Create a single user
-function createUser (profile) {
-  return new Promise(function (resolve, reject) {
-    const newChatUser = new db.UserModel({
-      profileId: profile.id,
-      fullName: profile.displayName,
-      profilePic: profile.photos[0].value || '/img/user.jpg'
-    })
-
-    resolve(newChatUser.save(err => {
-      if (err) return reject(err)
-      resolve(newChatUser)
-    }))
-  })
+function findUserByMongoID (id) {
+  return db.UserModel.findById(id)
 }
 
-module.exports = { findUser, createUser }
+// Create a single user
+function createUser (profile) {
+  const newChatUser = new db.UserModel({
+    profileId: profile.id,
+    fullName: profile.displayName,
+    profilePic: profile.photos[0].value || '/img/user.jpg'
+  })
+  return newChatUser.save()
+}
+
+module.exports = { findUser, findUserByMongoID, createUser }
