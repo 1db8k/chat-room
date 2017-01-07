@@ -6,4 +6,14 @@ Mongoose.connection.on('error', err => {
   console.error(err)
 })
 
-module.exports = { Mongoose }
+// Create a Schema that defines the structure for storing user data
+const chatUser = new Mongoose.Schema({
+  profileId: String,
+  fullName: String,
+  profilePic: String
+})
+
+// Turn the Schema into a usable model
+const UserModel = Mongoose.model('chatUser', chatUser)
+
+module.exports = { Mongoose, UserModel }
