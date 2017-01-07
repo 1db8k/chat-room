@@ -1,5 +1,5 @@
 const router = require('express').Router()
-
+const passport = require('passport')
 router.get(['/', '/login'], (req, res, next) => {
   res.render('login', {
     cssPath: 'loginStyles',
@@ -9,7 +9,8 @@ router.get(['/', '/login'], (req, res, next) => {
   .get('/rooms', (req, res, next) => {
     res.render('rooms', {
       cssPath: 'roomsStyles',
-      title: 'Rooms'
+      title: 'Rooms',
+      user: req.user
     })
   })
   .get('/chatroom', (req, res, next) => {
@@ -18,6 +19,11 @@ router.get(['/', '/login'], (req, res, next) => {
       title: 'Chatroom'
     })
   })
+  .get('/auth/facebook', passport.authenticate('facebook'))
+  .get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/rooms',
+    failureRedirect: '/',
+    failureFlash: true
+  }))
   .get('*', (req, res, next) => {
     res.render('404', {
       cssPath: '404',
