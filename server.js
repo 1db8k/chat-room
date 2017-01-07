@@ -1,6 +1,7 @@
 const express = require('express')
-const path = require('path')
 const exphbs = require('express-handlebars')
+const passport = require('passport')
+const path = require('path')
 const chatroom = require('./app')
 const app = express()
 const port = process.env.PORT || process.argv[2] || 3000
@@ -11,6 +12,9 @@ app.set('view engine', '.hbs')
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(chatroom.session)
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(chatroom.router)
 
 app.listen(port, () => {
