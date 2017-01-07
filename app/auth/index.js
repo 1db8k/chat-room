@@ -27,9 +27,10 @@ module.exports = function authMiddleWare () {
           .then(newChatUser => {
             done(null, newChatUser)
           })
-          .catch((err) => console.log(err))
+          .catch((err) => console.error(err))
         }
       })
+      .catch((err) => console.error(err))
   }
   passport.use(new FacebookStrategy(config.fb, authCallback))
 }
