@@ -2,6 +2,7 @@ const passport = require('passport')
 const hlpr = require('../helpers')
 const config = require('../config')
 const FacebookStrategy = require('passport-facebook').Strategy
+const TwitterStrategy = require('passport-twitter').Strategy
 
 module.exports = function authMiddleWare () {
   passport.serializeUser((user, done) => {
@@ -33,4 +34,5 @@ module.exports = function authMiddleWare () {
       .catch((err) => console.error(err))
   }
   passport.use(new FacebookStrategy(config.fb, authCallback))
+  passport.use(new TwitterStrategy(config.twitter, authCallback))
 }
