@@ -5,6 +5,9 @@ $facebook-blue: rgb(73, 99, 159);
 $twitter-blue: rgb(52, 152, 219);
 $header-bg: rgb(75, 75, 75);
 
+$header-height: 56px;
+$seperation: 15px;
+
 * {
   box-sizing: border-box;
 }
@@ -13,10 +16,15 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+a {
+	text-decoration: none;
+}
+
 .container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .contents {

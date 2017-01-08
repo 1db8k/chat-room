@@ -1,12 +1,11 @@
-$seperation: 15px;
-
 .header {
+    @include border-shadow();
     display: flex;
     justify-content: space-around;
     align-items: center;
     background-color: $header-bg;
     width: 100%;
-    height: 50px;
+    height: 56px;
 }
 
 .title {
@@ -23,10 +22,14 @@ $seperation: 15px;
 
 .userPicHolder {
     margin-left: auto;
+    width: $header-height;
+    height: $header-height;
+    background-size: cover;
+    background-position: center;
 }
 
 .userName {
-  color:white;
+    color: white;
     display: none;
 }
 
@@ -43,6 +46,7 @@ $seperation: 15px;
         margin-left: auto;
         display: inherit;
     }
+
     .userPicHolder {
         margin-left: $seperation;
     }
