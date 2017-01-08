@@ -7,9 +7,9 @@ const app = express()
 const port = process.env.PORT || process.argv[2] || 3000
 
 app.disable('x-powered-by')
-app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', partialsDir: path.join(__dirname, '/views/partials/') }))
 app.set('view engine', '.hbs')
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public/dist/')))
 
 app.use(chatroom.session)
 app.use(passport.initialize())
