@@ -5,7 +5,8 @@ const passport = require('passport')
 router.get(['/', '/login'], (req, res, next) => {
   res.render('login', {
     cssPath: 'loginStyles',
-    title: 'Login'
+    title: 'Login',
+    loginHeader: true
   })
 })
   .get('/rooms', hlprs.midWare.redirectIfNotLoggedIn, (req, res, next) => {
