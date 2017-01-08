@@ -20,4 +20,19 @@ function createUser (profile) {
   return newChatUser.save()
 }
 
-module.exports = { findUser, findUserByMongoID, createUser }
+function redirectIfNotLoggedIn (req, res, next) {
+  if (req.isAuthenticated()) {
+    next()
+  } else {
+    res.redirect('/')
+  }
+}
+
+module.exports = {
+  findUser,
+  findUserByMongoID,
+  createUser,
+  midWare: {
+    redirectIfNotLoggedIn
+  }
+}
