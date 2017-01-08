@@ -3,8 +3,8 @@
 
     <p class="title">{{title}}</p>
     <p class="userName">{{user.fullName}}</p>
-    <div class="userPicHolder">
-      <img src="{{user.profilePic}}" alt="{{user.fullName}}">
+    <div class="userPicHolder" style="background-image: url('{{user.profilePic}}');">
+      {{!-- <img src="{{user.profilePic}}" alt="{{user.fullName}}"> --}}
     </div>
     {{!-- <a href="logout" id="logOutBtn">Logout</a> --}}
 
