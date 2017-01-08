@@ -1,0 +1,8 @@
+@import 'partials/base';
+
+$border: 29px solid blue;
+
+.alert {
+  border-left: $border;
+  padding: 0 16px;
+}

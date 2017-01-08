@@ -1,0 +1,61 @@
+@import 'partials/base';
+@import 'partials/icon-sizes';
+a {
+	color: blue;
+	text-decoration: none;
+}
+
+.titlePanel {
+  @include border-shadow();
+  text-align: center;
+	background-color: $header-bg;
+  margin-bottom: auto;
+  width: 100%;
+  h1 {
+  	color: white;
+    font-size: 2em;
+    margin: 0.3em;
+    font-weight: bold;
+  }
+}
+
+.logo {
+	@include logo();
+	margin-bottom: 0.5em;
+}
+.buttonContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+}
+.socialButton {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 10px;
+	border-radius: 5px;
+	color: white;
+	width: 90%;
+	max-width: 420px;
+	&.facebook {
+		background-color: $facebook-blue;
+		margin-bottom: 1em;
+	}
+
+	&.twitter {
+		background-color: $twitter-blue;
+	}
+
+	i {
+		flex-basis: 1em;
+    text-align: center;
+	}
+
+	span {
+		text-align: center;
+		font-size: 1.3em;
+		font-weight: bold;
+		flex-grow: 1.5;
+	}
+}

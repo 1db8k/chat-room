@@ -1,0 +1,49 @@
+$seperation: 15px;
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: $header-bg;
+    width: 100%;
+    height: 50px;
+}
+
+.title {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.icon {
+    @include logo();
+    margin-left: $seperation;
+    margin-right: $seperation;
+}
+
+.userPicHolder {
+    margin-left: auto;
+}
+
+.userName {
+  color:white;
+    display: none;
+}
+
+#logOutBtn {
+    color: white;
+    text-decoration: none;
+    background: rgb(210, 13, 13);
+    padding: 0.5em;
+    text-align: center;
+    border-radius: 5px;
+}
+@media (min-width: 600px) {
+    .userName {
+        margin-left: auto;
+        display: inherit;
+    }
+    .userPicHolder {
+        margin-left: $seperation;
+    }
+}

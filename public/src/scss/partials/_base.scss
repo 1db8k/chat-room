@@ -1,0 +1,29 @@
+@import 'mixins';
+@import 'icon-sizes';
+
+$facebook-blue: rgb(73, 99, 159);
+$twitter-blue: rgb(52, 152, 219);
+$header-bg: rgb(75, 75, 75);
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: space-around;
+  align-items: center;
+  flex-basis: 25em;
+}
