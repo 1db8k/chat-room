@@ -1,5 +1,7 @@
 const config = require('../config')
-const Mongoose = require('mongoose').connect(config.mongoURI)
+const mongoose = require('mongoose')
+mongoose.Promise = global.Promise
+const Mongoose = mongoose.connect(config.mongoURI)
 
 Mongoose.connection.on('error', err => {
   // TODO: better error handling
