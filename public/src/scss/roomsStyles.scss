@@ -50,8 +50,8 @@ input[type="text"] {
 
     li {
         @include border-shadow();
-        margin-top: 5px;
-        width: 100%;
+        margin: 5px auto;
+        width: 90%;
         background-color: #4ca4c6;
         border-radius: 10px;
 
