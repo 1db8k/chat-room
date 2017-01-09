@@ -1,4 +1,5 @@
 const db = require('../db')
+const appName = require('../../package').name
 
 // Find a single user based on a key
 function findUser (profileId) {
@@ -28,10 +29,22 @@ function redirectIfNotLoggedIn (req, res, next) {
   }
 }
 
+class MustacheConfig {
+  constructor (pageName, user, customObj) {
+    customObj = customObj || {}
+    this.appName = appName
+    this.cssPath = customObj.hasOwnProperty('cssPath') ? customObj.cssPath : `${pageName}Styles`
+    this.title = customObj.hasOwnProperty('title') ? customObj.title : pageName.charAt(0).toUpperCase() + pageName.substr(1)
+    this.user = user
+    this.loginHeader = customObj.hasOwnProperty('loginHeader') ? customObj.loginHeader : false
+  }
+}
+
 module.exports = {
   findUser,
   findUserByMongoID,
   createUser,
+  MustacheConfig,
   midWare: {
     redirectIfNotLoggedIn
   }
