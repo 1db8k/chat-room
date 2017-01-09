@@ -1,5 +1,5 @@
 {
-  "name": "chat-room",
+  "name": "Chat Room",
   "version": "0.0.0",
   "description": "A node.js chatroom app",
   "main": "server.js",
