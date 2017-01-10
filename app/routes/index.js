@@ -25,8 +25,7 @@ router.get(['/', '/login'], (req, res, next) => {
   })
 
   .get('*', (req, res, next) => {
-    res.render('404', { title: 'Error 404'
-    })
+    res.render('404', new hlprs.MustacheConfig('chatroom', req.user, { title: 'Error 404', cssPath: '404' }))
   })
 
 module.exports = router
