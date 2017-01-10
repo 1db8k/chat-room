@@ -3,7 +3,11 @@ const hlprs = require('../helpers')
 const passport = require('passport')
 
 router.get(['/', '/login'], (req, res, next) => {
-  res.render('login', new hlprs.MustacheConfig('login', null, { loginHeader: true }))
+  if (req.isAuthenticated()) {
+    res.redirect('/rooms')
+  } else {
+    res.render('login', new hlprs.MustacheConfig('login', null, { loginHeader: true }))
+  }
 })
   .get('/rooms', hlprs.midWare.redirectIfNotLoggedIn, (req, res, next) => {
     res.render('rooms', new hlprs.MustacheConfig('rooms', req.user))
