@@ -12,21 +12,15 @@ gulp.task('sass', () => {
     .pipe(gulp.dest('./public/dist/css'))
 })
 
-// gulp.task('watch', () => {
-//   return gulp
-//     // Watch the input folder for change,
-//     // and run `sass` task when something happens
-//     .watch('./public/src', ['sass'])
-//     // When there is a change,
-//     // log a message in the console
-//     .on('change', function (event) {
-//       console.log('File ' + event.path + ' was ' + event.type + ', running tasks...')
-//     })
-// })
+gulp.task('compress', function () {
+  gulp.src(['!./public/src/js/*.min.js', './public/src/js/*.js'])
+    .pipe(p.sourcemaps.init())
+    .pipe(p.uglify())
+    .pipe(p.sourcemaps.write())
+    .pipe(gulp.dest('./public/dist/js/'))
+})
 
-// p.nodemon({script: 'server.js'}).on('restart', ['sass'])
-
-gulp.task('start', () => {
+gulp.task('default', () => {
   p.nodemon({
     script: 'server.js',
     ext: '*',
@@ -35,5 +29,5 @@ gulp.task('start', () => {
       'node_modules/'
     ],
     env: { 'NODE_ENV': 'development' }
-  }).on('restart', ['sass'])
+  }).on('restart', ['compress', 'sass'])
 })
