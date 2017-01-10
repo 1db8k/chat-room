@@ -1,5 +1,6 @@
 const db = require('../db')
 const appName = require('../../package').name
+const crypto = require('crypto')
 
 // Find a single user based on a key
 function findUser (profileId) {
@@ -40,6 +41,14 @@ class MustacheConfig {
   }
 }
 
+function roomExists (roomsArr, room) {
+  return roomsArr.some((item) => item.room.toLowerCase() === room.toLowerCase())
+}
+
+function uniqueRoomID () {
+  return crypto.randomBytes(24).toString('hex')
+}
+
 module.exports = {
   findUser,
   findUserByMongoID,
@@ -47,5 +56,7 @@ module.exports = {
   MustacheConfig,
   midWare: {
     redirectIfNotLoggedIn
-  }
+  },
+  roomExists,
+  uniqueRoomID
 }
