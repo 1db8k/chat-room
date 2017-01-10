@@ -17,7 +17,7 @@ app.use(passport.session())
 
 app.use(chatroom.router)
 
-app.listen(port, () => {
+chatroom.ioServer(app).listen(port, () => {
   let now = new Date()
   console.log(`Web server running on port ${port}. Restarted at ${now.toDateString()} ${now.toTimeString()}`)
 })
