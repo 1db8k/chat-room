@@ -1,4 +1,4 @@
 node_modules
 app/config
 public/dist
-./chatroom.log
+chatroom.log
