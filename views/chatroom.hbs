@@ -4,16 +4,16 @@
 	<div class="chatMessagesPanel">
 		<div class="chatMessages">
 		<!-- Loop this for chat messages -->
-		<div class="chatBlock">
+		{{!-- <div class="chatBlock">
 			<div class="userPic"><img src="/img/user.jpg"></div>
 			<div class="chatMsg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti perferendis eius aut nesciunt necessitatibus ad nulla, qui sequi, id nam. Possimus odit aut nisi veritatis amet distinctio id officiis ipsam!</div>
-		</div>
+		</div> --}}
 		<!-- loop end -->
 		</div>
-		<div class="typePanel">
-			<input type="text" name="userInput" placeholder="Type here and press enter">
-			<a href="#" id="uploadFile" class="fileUploadBtn">Photo</a>
-		</div>
+		<form class="typePanel" action="javascript:void(0);">
+				<input type="text" name="userInput" placeholder="Type here and press enter">
+				<a href="#" id="uploadFile" class="fileUploadBtn">Photo</a>
+		</form>
 	</div>
 	<div class="chatUsers">
 	<!-- Loop this for chat users -->
@@ -24,3 +24,76 @@
 	<!-- loop end -->
 	</div>
 </div>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+window.addEventListener('load', function () {
+	var socket = io(window.location.host + '/chatter', {
+    transports: ['websocket']
+  })
+	var roomID = '{{roomID}}'
+	var userFullName = '{{user.fullName}}'
+	var userPic = '{{user.profilePic}}'
+	var chatUsers = document.querySelector('.chatUsers')
+	var chatMessages = document.querySelector('.chatMessages')
+	var userInput = document.querySelector('input[name=userInput]')
+
+	function userList (user) {
+		return `<div class="userBlock">
+	<div class="userPic"><img src="${user.userPic}" alt="${user.userFullName}"></div>
+	<div class="cuserName">${user.userFullName}</div>
+</div>`
+	}
+
+	function updateFeed (userPic, message) {
+		var messageHTML = document.createElement('div')
+		messageHTML.classList.add('chatBlock')
+		var inner = `<div class="userPic">
+	<img src="${userPic}">
+</div>
+<div class="chatMsg">${message}</div>
+`
+		messageHTML.innerHTML = inner
+		chatMessages.appendChild(messageHTML)
+	}
+
+	socket.on('connect', () => {
+		socket.emit('join', {
+			roomID: roomID,
+			userFullName: userFullName,
+			userPic: userPic
+		})
+	})
+
+	socket.on('updateUserList', data => {
+		let parsedData = JSON.parse(data)
+		let usersListData = ''
+		for (var i = 0; i < parsedData.length; i++) {
+			var user = parsedData[i]
+			usersListData += userList(user)
+		}
+		chatUsers.innerHTML = usersListData
+	})
+
+	userInput.addEventListener('keyup', function(e) {
+		e.preventDefault()
+		if (e.which === 13 && this.value !== '') {
+			socket.emit('newMessage',{
+				roomID: roomID,
+				userFullName: userFullName,
+				userPic: userPic,
+				message: this.value
+			})
+			// Update the local feed
+			updateFeed(userPic, this.value)
+			this.value = ''
+		}
+	})
+
+	socket.on('inMessage', data => {
+		var parsedData = JSON.parse(data)
+		updateFeed(parsedData.userPic, parsedData.message)
+	})
+
+})
+
+</script>
