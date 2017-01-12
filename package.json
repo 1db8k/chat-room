@@ -1,5 +1,5 @@
 {
-  "name": "Gob Space",
+  "name": "Chatrooms",
   "version": "0.0.0",
   "description": "A node.js chatroom app",
   "main": "server.js",
