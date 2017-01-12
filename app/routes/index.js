@@ -13,8 +13,18 @@ router.get(['/', '/login'], (req, res, next) => {
     res.render('rooms', new hlprs.MustacheConfig('rooms', req.user))
   })
 
-  .get('/chatroom', hlprs.midWare.redirectIfNotLoggedIn, (req, res, next) => {
-    res.render('chatroom', new hlprs.MustacheConfig('chatroom', req.user))
+  .get('/chatroom/:id', hlprs.midWare.redirectIfNotLoggedIn, (req, res, next) => {
+    // Find a chatroom with the given ID
+    // Render it if the ID was found
+    const roomObj = hlprs.findRoomById(req.app.locals.chatrooms, req.params.id)
+    if (!roomObj) {
+      return next()
+    } else {
+      res.render('chatroom', new hlprs.MustacheConfig('chatroom', req.user, {
+        title: roomObj.room,
+        roomID: roomObj.roomID
+      }))
+    }
   })
 
   .get('/auth/facebook', passport.authenticate('facebook'))
