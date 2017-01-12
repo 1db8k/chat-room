@@ -26,7 +26,8 @@ gulp.task('default', () => {
     ext: '*',
     ignore: [
       'public/dist/',
-      'node_modules/'
+      'node_modules/',
+      '*.log'
     ],
     env: { 'NODE_ENV': 'development' }
   }).on('restart', ['compress', 'sass'])
