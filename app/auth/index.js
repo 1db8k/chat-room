@@ -1,4 +1,5 @@
 const passport = require('passport')
+const logger = require('../logger')
 const hlpr = require('../helpers')
 const config = require('../config')
 const FacebookStrategy = require('passport-facebook').Strategy
@@ -12,7 +13,8 @@ module.exports = function authMiddleWare () {
   passport.deserializeUser(function (id, done) {
     hlpr.findUserByMongoID(id)
         .then(user => done(null, user))
-        .catch(err => console.err(err))
+        .catch(err =>   logger.log('error', `Error when deserializing the user: ${err}`)
+)
   })
 
   function authCallback (accessToken, refreshToken, profile, done) {
@@ -28,7 +30,8 @@ module.exports = function authMiddleWare () {
           .then(newChatUser => {
             done(null, newChatUser)
           })
-          .catch((err) => console.error(err))
+          .catch((err) => logger.log('error', `Error creating user: ${err}`)
+)
         }
       })
       .catch((err) => console.error(err))
