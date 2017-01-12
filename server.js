@@ -14,6 +14,7 @@ app.use(express.static(path.join(__dirname, 'public/dist/')))
 app.use(chatroom.session)
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(require('morgan')('combined', { stream: { write: message => chatroom.logger.log('info', message) } }))
 
 app.use(chatroom.router)
 
