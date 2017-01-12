@@ -1,4 +1,4 @@
 node_modules
-app/config
-public/dist
+app/config/development.json
 chatroom.log
+public/src
