@@ -13,6 +13,7 @@ $light-grey: rgb(201, 201, 201);
 
 $header-height: 56px;
 $seperation: 15px;
+$wrapper-max-width: 720px;
 
 * {
   box-sizing: border-box;
@@ -20,6 +21,7 @@ $seperation: 15px;
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
+  overflow-x: hidden;
 }
 
 a {
@@ -27,7 +29,7 @@ a {
 }
 
 .container {
-  min-height: 100vh;
+  // min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,8 +38,23 @@ a {
 .contents {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
   justify-content: space-around;
   align-items: center;
-  flex-basis: 25em;
+  height: calc(100vh - #{$header-height});
+  // flex-basis: 25em;
+}
+
+::-webkit-scrollbar-track {
+	border-radius: 9px;
+	background-color: transparent;
+}
+
+::-webkit-scrollbar {
+	width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: #555;
 }

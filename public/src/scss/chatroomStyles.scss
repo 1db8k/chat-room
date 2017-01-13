@@ -1,24 +1,21 @@
 @import 'partials/base';
 @import 'partials/header';
-
-.contents {
-	* {
-		border: 1px solid #ccc;
-	}
-}
+$bubble-arrow-margin: 10px;
+$mobile-user-list-height: 40px;
+$message-bg-color: white;
 
 #roomsBtn {
 	position: absolute;
 	background-color: rgb(67, 202, 147);
 	padding: 17px;
 	left: 698px;
-	top:10px;
-	width:90px;
-	color:#FFF;
-	font-family:sans-serif;
+	top: 10px;
+	width: 90px;
+	color: #FFF;
+	font-family: sans-serif;
 	text-decoration: none;
 	text-align: center;
-	outline:none;
+	outline: none;
 }
 
 #roomsBtn:hover {
@@ -26,16 +23,20 @@
 }
 
 .chatListDiv {
-	position: relative;
-	width: 960px;
-	height: 566px;
-	/* background-color: red; */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	width: 100vw;
+	height: 100%;
+	background-color: rgb(223, 248, 248);
 }
 
 .roomsList {
-	margin:0px;
-	padding:0px;
-	list-style:none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 	font-family: sans-serif;
 }
 
@@ -52,70 +53,113 @@
 }
 
 .chatMessagesPanel {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	width: 100vw;
+	max-width: $wrapper-max-width;
+	height: 100%;
+	padding-top: $mobile-user-list-height;
+}
+
+.chatUsersBanner {
+	display: flex;
+	order: -1;
+	flex-direction: row;
 	position: absolute;
-	/* background:red; */
-	height: 566px;
-	width: 692px;
-	border-right: 1px dashed black;
+	/* height: 566px; */
+	background: #464646;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	color: white;
+	line-height: $mobile-user-list-height;
+	width: 100%;
+	min-height: $mobile-user-list-height;
+	padding: 0 15px 0 18px;
+	white-space: nowrap;
+
+	&:before {
+		content: '';
+		position: inherit;
+		/* z-index: 100; */
+		top: 0;
+		height: 50px;
+		width: 100%;
+		background: linear-gradient(to right, rgba(70, 70, 70, 0) 0%, rgba(70, 70, 70, 0) 70%, #464646 75%, #464646 100%)
+	}
 }
 
 .chatUsers {
-	position: absolute;
-	height:566px;
-	background: #F7F4F4;
-	width: 267px;
-	left: 693px;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: row;
+	flex-direction: row;
 	overflow-x: hidden;
-	overflow-y: scroll;
+	width: 100%;
+}
+
+.toggleButtonContainer {
+	margin-left: auto;
+	align-items: center;
+	z-index: 1;
+}
+
+.toggleButton {
+	font-size: 1.5em;
+	line-height: 40px;
 }
 
 .chatMessages {
 	position: relative;
-	/* background-color: red; */
-	border-bottom: 1px dashed;
-	width: 692px;
-	height: 490px;
-	top: 0px;
+	top: 0;
+	height: 100%;
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
 
 .typePanel {
-	position: relative;
-	width:692px;
-	height: 75px;
 	background-color: #FFFFFF;
+	display: flex;
+	flex-direction: row;
+	border-radius: 10px;
+	margin: 5px;
 }
 
 input[name='userInput'] {
-	position:absolute;
+	outline: none;
 	padding: 24px;
-	font-size: 22px;
-	width: 537px;
-	height: 23px;
-	top: 0px;
-	outline: 0px;
-	left: 0px;
+	font-size: 1em;
 	border: none;
+	text-align: center;
+	width: 100%;
+	border-radius: 10px;
+
+	&:focus::placeholder {
+		color: transparent;
+	}
 }
 
 .chatBlock {
-	position: relative;
-	width: 622px;
-	/*height:20px;*/
-	background:rgba(0,0,0,0.1);
-	padding: 10px;
-	margin: 16px;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	padding: $bubble-arrow-margin;
 	min-height: 32px;
 }
 
 .userPic {
-	position: absolute;
-	width: 28px;
-	height: 28px;
-	top: 13px;
-	left: 10px;
-	background: rgba(0, 0, 0, 0.63);
+	width: 50px;
+	height: 50px;
+	background-size: cover;
+	background-position: center;
+	border-radius: 50%;
+}
+
+.userListPic {
+	display: none;
 }
 
 .userPic > img {
@@ -124,61 +168,106 @@ input[name='userInput'] {
 }
 
 .chatMsg {
+	padding: 15px;
+	margin: 0 $bubble-arrow-margin;
+	max-width: 70%;
+	box-shadow: 0 3px 5px -4px rgba(0, 0, 0, 0.75);
+	word-wrap: break-word;
+}
+
+.chatMsgArrow {
+	content: "";
 	position: relative;
-	left: 38px;
-	font-family: sans-serif;
-	font-size: 15px;
-	width: 591px;
+	top: $bubble-arrow-margin;
+	width: 0;
+	height: 0;
+}
+
+.ownMessage {
+	justify-content: flex-end;
+
+	.chatMsg {
+		background: $rooms-list-blue;
+	}
+
+	.chatMsgArrow {
+		left: -$bubble-arrow-margin;
+		border: 5px solid $rooms-list-blue;
+		border-bottom-color: transparent;
+		border-right-color: transparent;
+	}
+}
+
+.othersMessage {
+	.chatMsg {
+		background: $message-bg-color;
+	}
+
+	.chatMsgArrow {
+		right: -$bubble-arrow-margin;
+		border: 5px solid $message-bg-color;
+		border-bottom-color: transparent;
+		border-left-color: transparent;
+	}
 }
 
 .chatMsg > img {
-	margin:5px;
-	box-shadow:2px 1px 5px rgba(0,0,0,0.6);
-	border-radius:2px;
+	margin: 5px;
+	box-shadow: 2px 1px 5px rgba(0,0,0,0.6);
+	border-radius: 2px;
 }
 
 .userBlock {
-	position: relative;
-	background: #E8E7E1;
-	height: 50px;
-	width: 253px;
+	/* position: relative; */
+	/* background: #E8E7E1; */
+	/* height: 50px; */
 	margin-bottom: 1px;
-}
 
-.cuserName {
-	position: absolute;
-	font-family: sans-serif;
-	font-size: 17px;
-	font-weight: normal;
-	top: 17px;
-	left: 46px;
-	margin: 0;
+	&:first-child {
+		.cuserName {
+			white-space: nowrap;
+			margin-left: 6px;
+		}
+	}
+
+	&:not(:last-child) {
+		.cuserName {
+			white-space: nowrap;
+
+			&::after {
+				margin-right: 6px;
+				content: ', ';
+			}
+		}
+	}
 }
 
 .fileUploadBtn {
-    position: absolute;
-    right: 14px;
-    width: 43px;
-    overflow: hidden;
-    top: 22px;
-    height: 21px;
-    outline: none;
-    color: #FFF;
-    background: rgb(67, 202, 147);
-    padding: 10px;
-    font-family: sans-serif;
-    text-decoration: none;
+	display: none;
+	position: absolute;
+	right: 14px;
+	width: 43px;
+	overflow: hidden;
+	top: 22px;
+	height: 21px;
+	outline: none;
+	color: #FFF;
+	background: rgb(67, 202, 147);
+	padding: 10px;
+	font-family: sans-serif;
+	text-decoration: none;
 }
 
-/*.fileUploadBtn::-webkit-file-upload-button {
+.fileUploadBtn::-webkit-file-upload-button {
 	visibility: hidden;
 }
+
 .fileUploadBtn::before {
 	content: 'Photo';
 	display: inline-block;
 	background: rgb(67, 202, 147);
 	border: none;
-	padding: 10px 10px;
+	padding: 10px;
 	outline: none;
 	white-space: nowrap;
 	-webkit-user-select: none;
@@ -186,9 +275,11 @@ input[name='userInput'] {
 	font-weight: 700;
 	font-size: 10pt;
 }
+
 .fileUploadBtn:hover::before {
-  	border-color: black;
+	border-color: black;
 }
+
 .fileUploadBtn:active::before {
 	background: rgb(45, 169, 118);
-}*/
+}
