@@ -26,14 +26,17 @@ window.addEventListener('load', function () {
 		}
 		roomsList.innerHTML = listStr
 	}
+	// Get a list of chatrooms
 	socket.emit('getChatRoomsArr')
+
+	// Event listener for chatRoomsList
 	socket.on('chatRoomsArr', function (chatRoomsArr) {
 		renderChatRooms(JSON.parse(chatRoomsArr))
 	})
 
 	// Create chat
 	function sendRoomName () {
-		if (roomName.value) {
+		if (roomName.value !== '') {
 			socket.emit('newRoom', roomName.value)
 			roomName.value = ''
 		}

@@ -81,14 +81,21 @@ function addUserToRoom (roomsArr, data, socket) {
   }
 }
 
-function removeUserFromRoom(roomsArr, socket) {
-  for (var i = 0; i < roomsArr.length; i++) {
-    let room = roomsArr[i]
-    let user = room.users.findIndex(user => user.socketID === socket.id)
-
+function removeUserFromRoom (roomsArr, socket) {
+  // for (var i = 0; i < roomsArr.length; i++) {
+  //   let room = roomsArr[i]
+  //   let user = room.users.findIndex(user => user.socketID === socket.id)
+  //   if (user > -1) {
+  //     socket.leave(room.roomID)
+  //     room.users.splice(user, 1)
+  //     return room
+  //   }
+  // }
+  for (let room of roomsArr) {
+    let user = room.users.findIndex((element, index, array) => element.socketID === socket.id)
     if (user > -1) {
       socket.leave(room.roomID)
-      room.users.splice(user, 1)
+      room.users.splice(findUser, 1)
       return room
     }
   }
