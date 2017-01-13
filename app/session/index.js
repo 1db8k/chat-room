@@ -7,8 +7,7 @@ let sessionObj = {
   secret: config.sessionSecret,
   resave: false,
   store: new MongoStore({
-    mongooseConnection: db.Mongoose.connection,
-    touchAfter: 24 * 3600 // time period in seconds
+    mongooseConnection: db.Mongoose.connection
   })
 }
 
