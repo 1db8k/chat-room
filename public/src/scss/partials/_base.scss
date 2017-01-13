@@ -1,0 +1,43 @@
+@import 'mixins';
+@import 'icon-sizes';
+
+$facebook-blue: rgb(73, 99, 159);
+$twitter-blue: rgb(52, 152, 219);
+$rooms-list-blue: rgb(76, 164, 198);
+
+$header-bg: rgb(75, 75, 75);
+
+$dark-grey: rgb(113, 113, 113);
+$mid-grey: rgb(150, 150, 150);
+$light-grey: rgb(201, 201, 201);
+
+$header-height: 56px;
+$seperation: 15px;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+a {
+	text-decoration: none;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: space-around;
+  align-items: center;
+  flex-basis: 25em;
+}
