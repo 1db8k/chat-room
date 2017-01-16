@@ -55,11 +55,11 @@ $message-bg-color: white;
 .chatMessagesPanel {
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-end;
+	// justify-content: flex-end;
 	width: 100vw;
-	max-width: $wrapper-max-width;
-	height: 100%;
-	padding-top: $mobile-user-list-height;
+	// max-width: $wrapper-max-width;
+	// padding-top: $mobile-user-list-height;
+	flex: 1;
 }
 
 .chatUsersBanner {
@@ -85,7 +85,7 @@ $message-bg-color: white;
 		top: 0;
 		height: 50px;
 		width: 100%;
-		background: linear-gradient(to right, rgba(70, 70, 70, 0) 0%, rgba(70, 70, 70, 0) 70%, #464646 75%, #464646 100%)
+		background: linear-gradient(to right, rgba(70, 70, 70, 0) 0%, rgba(70, 70, 70, 0) 70%, #464646 75%, #464646 100%);
 	}
 }
 
@@ -99,17 +99,44 @@ $message-bg-color: white;
 	flex-direction: row;
 	overflow-x: hidden;
 	width: 100%;
+
+	&.droppedDown {
+		flex-direction: column;
+
+		.userBlock {
+			display: flex;
+			flex-direction: row;
+			padding: 5px 0;
+
+			.userListPic {
+				display: block;
+				margin-right: 10px;
+			}
+
+			.cuserName {
+				white-space: nowrap;
+				margin: 0;
+
+				&::after {
+					margin-right: 0;
+					content: '';
+				}
+			}
+		}
+	}
 }
 
 .toggleButtonContainer {
 	margin-left: auto;
-	align-items: center;
 	z-index: 1;
+	width: 40px;
+	display: flex;
 }
 
 .toggleButton {
 	font-size: 1.5em;
 	line-height: 40px;
+	margin: 0 auto;
 }
 
 .chatMessages {
@@ -118,24 +145,28 @@ $message-bg-color: white;
 	height: 100%;
 	overflow-x: hidden;
 	overflow-y: scroll;
+	padding-top: $mobile-user-list-height;
 }
 
-.typePanel {
+.typePanel {}
+
+.userInput {
 	background-color: #FFFFFF;
-	display: flex;
-	flex-direction: row;
-	border-radius: 10px;
-	margin: 5px;
-}
-
-input[name='userInput'] {
-	outline: none;
 	padding: 24px;
+	outline: none;
 	font-size: 1em;
 	border: none;
 	text-align: center;
-	width: 100%;
 	border-radius: 10px;
+	word-break: break-word;
+	overflow: auto;
+	margin: 5px;
+	max-height: 250px;
+
+	&:empty:not(:focus):before {
+		content: attr(data-placeholder);
+		color: $light-grey;
+	}
 
 	&:focus::placeholder {
 		color: transparent;
@@ -160,6 +191,8 @@ input[name='userInput'] {
 
 .userListPic {
 	display: none;
+	width: 40px;
+	height: 40px;
 }
 
 .userPic > img {
@@ -282,4 +315,51 @@ input[name='userInput'] {
 
 .fileUploadBtn:active::before {
 	background: rgb(45, 169, 118);
+}
+@media (min-width: 800px) {
+	.chatListDiv {
+		flex-direction: row;
+		align-items: stretch;
+		justify-content: flex-end;
+
+		.chatMessagesPanel {
+			flex: 1;
+		}
+
+		.chatUsersBanner {
+			flex-direction: row;
+			position: inherit;
+			order: 0;
+			width: auto;
+
+			&::before {
+				display: none;
+			}
+
+			.chatUsers {
+				flex-direction: column;
+
+				.userBlock {
+					display: flex;
+					margin-top: 10px;
+
+					.userListPic {
+						display: block;
+					}
+
+					.cuserName {
+						margin-left: 5px;
+						&::after {
+							margin: 0;
+							content: '';
+						}
+					}
+				}
+			}
+
+			.toggleButtonContainer {
+				display: none;
+			}
+		}
+	}
 }
