@@ -13,8 +13,7 @@ module.exports = function authMiddleWare () {
   passport.deserializeUser(function (id, done) {
     hlpr.findUserByMongoID(id)
         .then(user => done(null, user))
-        .catch(err =>   logger.log('error', `Error when deserializing the user: ${err}`)
-)
+        .catch(err => logger.log('error', `Error when deserializing the user: ${err}`))
   })
 
   function authCallback (accessToken, refreshToken, profile, done) {
@@ -27,14 +26,11 @@ module.exports = function authMiddleWare () {
         } else {
           // If the user is not found, create one in the local db and return
           hlpr.createUser(profile)
-          .then(newChatUser => {
-            done(null, newChatUser)
-          })
-          .catch((err) => logger.log('error', `Error creating user: ${err}`)
-)
+          .then(newChatUser => done(null, newChatUser))
+          .catch((err) => logger.log('error', `Error creating user: ${err}`))
         }
       })
-      .catch((err) => console.error(err))
+      .catch((err) => logger.log('error', `Error creating user: ${err}`))
   }
   passport.use(new FacebookStrategy(config.fb, authCallback))
   passport.use(new TwitterStrategy(config.twitter, authCallback))
