@@ -58,33 +58,45 @@ function findRoomById (roomsArr, roomID) {
 function addUserToRoom (roomsArr, data, socket) {
   // Get the room object
   const room = findRoomById(roomsArr, data.roomID)
-  if (room) {
+  if (room !== undefined) {
     // Get the active user's ID (Object as used in session)
     let userID = socket.request.session.passport.user
     // Check to see if this user already exists in the chatroom
-    let userAlreadyExists = room.users.some(user => user.userID === userID)
+    let userAlreadyExists = room.users.findIndex(user => user.userID === userID)
 
     // If the user is NOT alread present in the room, add him to the room
-    if (!userAlreadyExists) {
-      room.users.push({
-        socketID: socket.id,
-        userID,
-        userFullName: data.userFullName,
-        userPic: data.userPic
-      })
-
-      // Join the room channel
-      socket.join(data.roomID)
+    if (userAlreadyExists > -1) {
+      room.users.splice(userAlreadyExists, 1)
     }
+
+    room.users.push({
+      socketID: socket.id,
+      userID,
+      userFullName: data.userFullName,
+      userPic: data.userPic
+    })
+
+    // Join the room channel
+    socket.join(data.roomID)
+
     // Return the updated room object
     return room
   }
 }
 
-function removeUserFromRoom (roomsArr, socket) {
-  for (let room of roomsArr) {
-    let user = room.users.findIndex((element, index, array) => element.socketID === socket.id)
-    if (user > -1) {
+// Find and purge the user when a socket disconnects
+let removeUserFromRoom = (allrooms, socket) => {
+  for (let room of allrooms) {
+    // Find the user
+    let findUser = room.users.findIndex((element, index, array) => {
+      if (element.socketID === socket.id) {
+        return true
+      } else {
+        return false
+      }
+    })
+
+    if (findUser > -1) {
       socket.leave(room.roomID)
       room.users.splice(findUser, 1)
       return room
